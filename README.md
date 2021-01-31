@@ -6,9 +6,10 @@ This repository contains the python implementation of neighborGWAS method, which
 - generation of the neighbourhoods aggregation files on the permuted networks; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step (2_2_new_neighbourhood.py)
 - obtaining the statistics by using Fast-LMM snp-set function on the permuted data (3_obtain_pvalues_permuted_network.py)
 - calculation of the null distribution and adjusted pvalues
+Available here a toy-dataset onto which try the method. Detail below.
 
 ## DATA
-All the above methods are implemented in python3, and are tested on a toy dataset comprised of:
+The toy dataset is comprised of:
 - a SNP matrix with 200 columns (corresponding to the SNPs) and 200 rows (corresponding to the samples, e.g. individuals)
 - a ppi network in form of a binary adjacency matrix (e.g. 1 when there is an interaction between 2 genes (proteins), and 0 otherwise)
 - a mapping between the genes (involved in the PPI network) and the SNPs
