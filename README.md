@@ -1,10 +1,10 @@
 # neighborGWAS
 ## METHOD
 This repository contains the python implementation of neighborGWAS method, which foresees the following steps:
-- calculation of original p-values by using Fast-LMM snp-set function [1] (1_obtain_original_pvalues.py)
-- swapping of the genes according to degree-preserving permutation strategy (2_1_gene_swapping.py)
-- generation of the neighbourhoods aggregation files on the permuted networks; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step (2_2_new_neighbourhood.py)
-- obtaining the statistics by using Fast-LMM snp-set function on the permuted data (3_obtain_pvalues_permuted_network.py)
+- calculation of original p-values by using Fast-LMM snp-set function [1] (obtain_original_pvalues.py)
+- swapping of the genes according to degree-preserving permutation strategy (gene_swapping.py)
+- generation of the neighbourhoods aggregation files on the permuted networks; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step (new_neighbourhood.py)
+- obtaining the statistics by using Fast-LMM snp-set function on the permuted data (obtain_pvalues_permuted_network.py)
 - calculation of the null distribution and adjusted pvalues
 Available here a toy-dataset onto which try the method. Detail below.
 
