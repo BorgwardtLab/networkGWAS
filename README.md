@@ -1,11 +1,11 @@
 # neighborGWAS
 ## METHOD
 This repository contains the python implementation of neighborGWAS method, which foresees the following steps:
-- calculation of original p-values capturing the association score of each neighbourhood and the phenotype of interest; this is done by using Fast-LMM snp-set function [1] (obtain_original_pvalues.py)
-- swapping of the genes according to degree-preserving permutation strategy (gene_swapping.py)
-- generation of the neighbourhoods aggregation files on the permuted networks; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step (new_neighbourhood.py)
+- calculation of original p-values capturing the association score of each neighbourhood and the phenotype of interest; this is done by using Fast-LMM snp-set function [1] ( [**obtain_original_pvalues.py**])
+- swapping of the genes according to degree-preserving permutation strategy ( [**gene_swapping.py**])
+- generation of the neighbourhoods aggregation files on the permuted networks; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step ( [**new_neighbourhood.py**])
 - obtaining the statistics by using Fast-LMM snp-set function on the permuted data (obtain_pvalues_permuted_network.py); this script accepts as command-line argument the index of the permutation. This structure allows to parallelise the computation when possible. An acceptable number of permutations is 1000.
-- calculation of the null distribution and adjusted pvalues from the original p-values and the p-values obtained on the permuted networks; reporting of the contingency table, precision and recall (null_distr_adj_pvals.py)
+- calculation of the null distribution and adjusted pvalues from the original p-values and the p-values obtained on the permuted networks; reporting of the contingency table, precision and recall ( [**null_distr_adj_pvals.py**])
 Available here a toy-dataset on which try the method. Detail below.
 
 ## DATA
@@ -39,3 +39,6 @@ The code only supports python3 and requires the following packages and submodule
 
 [1] Listgarten, J. et al, A powerful and efficient set test for genetic markers that handles confounders.
 Bioinformatics, 2013.
+
+## CONTACT
+giulia.muzio@bsse.ethz.ch
