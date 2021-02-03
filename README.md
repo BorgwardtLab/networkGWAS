@@ -13,7 +13,6 @@ The toy dataset is comprised of:
 - a SNP matrix with 200 columns (corresponding to the SNPs) and 200 rows (corresponding to the samples, e.g. individuals)
 - a ppi network in form of a binary adjacency matrix (e.g. 1 when there is an interaction between 2 genes (proteins), and 0 otherwise)
 - a mapping between the genes (involved in the PPI network) and the SNPs
-- the same network expressed in form of interactions between the SNPs
 
 In particular:
 - gene_name.pkl contains the names of the genes
