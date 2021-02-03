@@ -1,14 +1,42 @@
 '''
 Script for constructing the list of SNPs
 belonging to the permuted 1-degree neighborhoods
-given the list of permuted genes.
+given the list of permuted genes. This is the step
+for performing the 1-degree neighbourhood aggregation 
+on the permuted network.
+
+Inputs:
+- 'data/ppi.pkl': 		  		  	PPI network in form of pandas DataFrame. The
+								  	keys of the data frame are the names of the 
+									genes included in the network. The values of
+									the dataframe is the non-weighted adjacency 
+									matrix of the PPI network, e.g. 1 when there is
+								 	an edge between the 2 genes, and 0 when there is
+								  	no edge, e.g. no interaction
+
+- 'data/gene_name.pkl':   		  	numpy vector containing the names of the genes 
+						  		  	included in the network
+
+- 'data/mapping.pkl':    		  	numpy vectors containing 2 columns. One has the 
+								  	name of the genes, in the other the names of the 
+								 	SNPs. This define the mapping between the genes and
+								 	the SNPs. This is necessary for obtaining the neigh-
+								  	bourhood aggregation on the fake network
+
+
+- 'output/permutations/nb_files/':  string where to save the 1-degree aggregations on
+									the permuted networks.
+Command-line arguments:
+--nperm:    				        integer; it's the number of permutation to perform
+									minimum should be 1000.
+
 '''
 
 import pandas as pd
 import numpy as np
-from IPython import embed
 from utils import *
 import argparse
+import os
 
 def main(args):	
 	# Setting parameters
@@ -18,13 +46,14 @@ def main(args):
 	network = load_file('data/ppi.pkl') # network
 	gene_name = load_file('data/gene_name.pkl') # genes
 	gene_snps = load_file('data/mapping.pkl') # gene-snp mapping
-	
-	neighbourhood_file(network, gene_name, gene_snps, nperm)
+	outdir = 'output/permutations/nb_files/'
+
+	neighbourhood_file(network, gene_name, gene_snps, nperm, outdir)
 	
 	return 0
 	
 
-def neighbourhood_file(A, gene_name, gene_snps, nperm):
+def neighbourhood_file(A, gene_name, gene_snps, nperm, outdir):
 	'''
 	Function for performing the swapping of genes having the same 
 	degree (or close)
@@ -64,7 +93,10 @@ def neighbourhood_file(A, gene_name, gene_snps, nperm):
 			snp_list = np.concatenate((snp_list, np.c_[snps, np.full(len(snps), 'set_' + str(i))]))
 
 		df = pd.DataFrame(snp_list)
-		df.to_csv('output/permutations/nb_files/list_nb1_' + str(j) + '.txt', header = None, index = None, sep = ' ')
+		if(not os.path.exists(outdir)):
+			os.makedirs(outdir)
+
+		df.to_csv(outdir + 'list_nb1_' + str(j) + '.txt', header = None, index = None, sep = ' ')
 
 
 	return 0

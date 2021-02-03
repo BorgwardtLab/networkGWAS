@@ -2,11 +2,29 @@
 Script for saving the permuted genes;
 the permutation is done by following
 the degree-permutation strategy
+
+File in input:
+- 'data/ppi.pkl': 		                  PPI network in form of pandas DataFrame. The
+										  keys of the data frame are the names of the 
+										  genes included in the network. The values of
+										  the dataframe is the non-weighted adjacency 
+										  matrix of the PPI network, e.g. 1 when there is
+										  an edge between the 2 genes, and 0 when there is
+										  no edge, e.g. no interaction
+
+- 'data/gene_name.pkl':   				  numpy vector containing the names of the genes 
+										  included in the network
+
+- 'output/permutations/permuted_genes/':  string where to save the permuted 
+										  genes.
+
+Command-line arguments:
+--nperm:    				              integer; it's the number of permutation to perform
+										  minimum should be 1000.
 '''
 
 import numpy as np
 import pandas as pd
-from IPython import embed
 import argparse
 from utils import *
 import re
@@ -18,8 +36,11 @@ def main(args):
 	# LOADING INPUT FILES
 	network = load_file('data/ppi.pkl') # network
 	gene_name = load_file('data/gene_name.pkl') # genes
+	outdir = 'output/permutations/permuted_genes/'
 	
-	degree_permutations(network, gene_name, nperm)
+	# Calling the function for performing the 
+	# degree-preserving permutation technique
+	degree_permutations(network, gene_name, nperm, outdir)
 	
 	return 0
 	
@@ -54,11 +75,11 @@ def degree_permutations(network_df, gene_name, nperm, minimum = 5):
 	# we do that starting from the end, because usually the genes with 
 	# higher degree have lower cardinality
 
-
 	swapping_group = []
 	temp, counts, flag = [], 0, False
 	for d, c in zip(deg[::-1], count[::-1]):
-		if((c < minimum) | (flag == True)):
+		if((c < minimum) | (flag == True)): # if for the current degree there are
+											# no more than minimum genes
 			temp.append(d)
 			flag = True
 			counts += c 
@@ -67,9 +88,12 @@ def degree_permutations(network_df, gene_name, nperm, minimum = 5):
 				flag = False
 				counts = 0
 				temp = []
-			elif(d == deg[0]):
+			elif(d == deg[0]): # if the last neighbourhood hasn't been 
+							   # assigned yet to a "degree group" which
+							   # could reach the minimum number defined
 				swapping_group[-1] = [swapping_group[-1], d]
-		else:
+		else: # if the number of genes having the current degree is enough
+		      # e.g. higher than minimum
 			swapping_group.append(d)
 
 	swapping_group = swapping_group[::-1]
@@ -90,7 +114,10 @@ def degree_permutations(network_df, gene_name, nperm, minimum = 5):
 			tot_perm[idx] = perm
 		
 		# save the permutations
-		save_file('output/permutations/permuted_genes/genes_' + str(j) + '.pkl', tot_perm)
+		if(not os.path.exists(outdir)):
+			os.makedirs(outdir)
+
+		save_file(outdir + 'genes_' + str(j) + '.pkl', tot_perm)
 
 	return 0
 	

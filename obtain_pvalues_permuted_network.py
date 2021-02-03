@@ -7,6 +7,43 @@ Through this script it is possible to obtain
 the p-values for the permuted network, which then 
 will be adjusted using the degree-preserving 
 permutation strategy.
+
+NOTE: this script performs the computation of
+	  the j-th permutation
+
+Inputs:
+- 'data/plink/snp_matrix'                 bem/bim/fim files of the SNPs matrix where there are
+										  the SNPs to test, e.g. the SNPs in the neighborhood
+										  to test the association with the phenotype
+
+- 'data/plink/phenotype.pheno'            file with the phenotype in plink format
+
+- 'output/permutations/ \
+   nb_files/list_nb1_' + j + '.txt':      input file for FaST-LMM-Set function. It is a .txt
+										  file having on one column the name of the SNPs, and
+										  on the other column the name of the set they belong to. 
+										  This has the information about the SNPs obtained by 
+										  performing 1-degree aggregation of the SNPs, e.g. each
+										  neighborhood is represented by a set of SNPs on the j-th 
+										  permuted network
+
+- 'data/gene_name.pkl':   				  numpy vector containing the names of the genes 
+										  included in the network
+
+- 'output/permutations/pvalues/ \
+   pvalues_' + str(j) + '.pkl':           path where to save the pvalues obtained on the j-th 
+   								          permuted network
+
+Command-line arguments:
+--test          						  kind of statistical test to be used to obtain the 
+										  association score with FaST-LMM-Set function. Could 
+										  be either 'lrt' or 'sc-davies'. Default is "lrt". It 
+										  should be consistent with what was chosen for the original
+										  p-values.
+
+--j                                       index of the permutation for which to launch the FaST-LMM
+										  snp-set function. This is done for making it easy to paralle-
+										  lise the computation.
 '''
 
 import numpy as np
@@ -32,13 +69,17 @@ def main(args):
 	file_sets = 'output/permutations/nb_files/list_nb1_' + j + '.txt'
 	# 4. Loading the names of the genes
 	genes = load_file('data/gene_name.pkl')
+	# Output dir
+	outdir = 'output/permutations/pvalues/'
+	if(not os.path.exists(outdir)):
+			os.makedirs(outdir) 
 	
 	# Running the method
 	results_df = snp_set(test_snps = genotype, G0 = None, set_list = file_sets,
 	                     pheno = phenotype, test = test, nperm = 0)
 
 	pvals = process_results(results_df, genes)
-	save_file('output/permutations/pvalues/pvalues_' + j + '.pkl', pvals)
+	save_file(outdir + 'pvalues_' + j + '.pkl', pvals)
 	return 0
 
 

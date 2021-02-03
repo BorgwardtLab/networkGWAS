@@ -1,5 +1,38 @@
-# Obtaining the null distribution
-# and the adjusted p-values
+'''
+Obtaining the null distribution from the p-values
+obtained by appling snp-set function on the permuted
+network. The null distribution is obtained by merging
+all the p-values from all the permutations.
+Afterwards, we obtain the adjusted p-values
+by calculating the fraction of p-values in the null
+distribution which are less or equal than the original
+pvalues, i.e. the ones obtained on the real network. 
+Then, we just use Benjamini-Hochberg for obtaining the
+list of neighborhoods predicted as associated with
+the phenotype. 
+
+Inputs:
+- 'data/gene_name.pkl':            numpy vector containing the names of the genes 
+								   included in the network
+
+- 'output/original_pvalues.pkl':   path to the file where the original p-values are saved,
+								   i.e. the pvalues obtained on the original network. These
+								   p-values has to be adjusted using the degree-preserving
+								   permutation strategy
+
+- 'output/permutations/pvalues/ \
+   pvalues_' + str(j) + '.pkl':    path to where the pvalues obtained on the j-th permuted network
+   								   are saved  
+
+- 'output/adj_pval.pkl':           path where to save the adjusted p-values obtained using the
+								   degree-preserving permutation strategy
+
+
+Command-line arguments:
+--j                                index of the permutation for which to launch the FaST-LMM
+								   snp-set function. This is done for making it easy to paralle-
+								   lise the computation.
+'''
 
 import numpy as np
 import pandas as pd
@@ -15,11 +48,19 @@ def main(args):
 	# Loading files
 	gene_name = load_file('data/gene_name.pkl') # genes
 	original_pvals = load_file('output/original_pvalues.pkl')
-	g = len(gene_name)
+	filename = 'output/permutations/pvalues/pvalues_'
+	g = len(gene_name) # obtaining the number of genes
 
-	null_distr_fdr = obtain_null_distributions(nperm, g)
+	# 1. Obtaining null distribution
+	null_distr_fdr = obtain_null_distributions(nperm, g, filename)
+	# 2. Obtaining adjusted p-values
 	adj_pval = pvalComputation(original_pvals, null_distr_fdr, nperm)
 	save_file('output/adj_pval.pkl', adj_pval)
+
+	# 3. Applying Benjamini-Hochberg method for predicting the associated
+	#    neighbourhoods
+	
+
 	return 0
 
 
@@ -52,7 +93,7 @@ def pvalComputation(res, null_distr, nperm):
 	return np.array(adj_pval) 
 
 
-def obtain_null_distributions(nperm, g):
+def obtain_null_distributions(nperm, g, filename):
 	'''
 	Function for obtaining the null distribution
 	as the union of all the pvalues. 
@@ -70,7 +111,7 @@ def obtain_null_distributions(nperm, g):
 	null_distrFDR = np.array([])
 	
 	for j in range(nperm):
-		pvalues = load_file('output/permutations/pvalues/pvalues_' + str(j) + '.pkl')
+		pvalues = load_file(filename + str(j) + '.pkl')
 		null_distrFDR = np.concatenate((null_distrFDR, pvalues[:, 1].astype(float)))
 	
 

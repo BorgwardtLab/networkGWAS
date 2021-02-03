@@ -5,11 +5,37 @@ constructed starting from each gene.
 Through this script it is possible to obtain
 the original p-values, which then will be adjusted
 using the degree-preserving permutation strategy.
+
+Inputs:
+- 'data/plink/snp_matrix'                 bem/bim/fim files of the SNPs matrix where there are
+										  the SNPs to test, e.g. the SNPs in the neighborhood
+										  to test the association with the phenotype
+
+- 'data/plink/phenotype.pheno'            file with the phenotype in plink format
+
+- 'data/plink/neighborhood_list.txt':     input file for FaST-LMM-Set function. It is a .txt
+										  file having on one column the name of the SNPs, and
+										  on the other column the name of the set they belong to. 
+										  This has the information about the SNPs obtained by 
+										  performing 1-degree aggregation of the SNPs, e.g. each
+										  neighborhood is represented by a set of SNPs
+
+- 'data/gene_name.pkl':   				  numpy vector containing the names of the genes 
+										  included in the network
+
+- 'output/original_pvalues.pkl':          path to the file where to save the original p-values,
+										  i.e. the pvalues obtained on the original network. These
+										  p-values has to be adjusted using the degree-preserving
+										  permutation strategy.
+
+Command-line arguments:
+--test          						  kind of statistical test to be used to obtain the 
+										  association score with FaST-LMM-Set function. Could 
+										  be either 'lrt' or 'sc-davies'. Default is "lrt".
 '''
 
 import numpy as np
 import pandas as pd
-from IPython import embed
 import argparse
 from fastlmm.association import snp_set
 import fastlmm
@@ -30,13 +56,15 @@ def main(args):
 	file_sets = 'data/plink/neighborhood_list.txt'
 	# 4. Loading the names of the genes
 	genes = load_file('data/gene_name.pkl')
+	# Defining the output filename
+	fileout = 'output/original_pvalues.pkl'
 	
 	# Running the method
 	results_df = snp_set(test_snps = genotype, G0 = None, set_list = file_sets,
 	                     pheno = phenotype, test = test, nperm = 0)
 
 	pvals = process_results(results_df, genes)
-	save_file('output/original_pvalues.pkl', pvals)
+	save_file(fileout, pvals)
 	return 0
 
 
