@@ -32,7 +32,7 @@ These formats, which are the classic plink formats (for more details, see https:
 The code only supports python3 and requires the following packages and submodules:
 + numpy (tested on 1.18.1)
 + pandas (tested on 1.0.1)
-+ fastlmm 
++ fastlmm (https://github.com/fastlmm/FaST-LMM)
 
 
 ## REFERENCES
