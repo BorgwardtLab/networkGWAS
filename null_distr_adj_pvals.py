@@ -27,6 +27,8 @@ Inputs:
 - 'output/adj_pval.pkl':           path where to save the adjusted p-values obtained using the
 								   degree-preserving permutation strategy
 
+- 'data/causal_genes.pkl':         name of the causal genes
+
 
 Command-line arguments:
 --j                                index of the permutation for which to launch the FaST-LMM
@@ -44,25 +46,58 @@ import re
 
 def main(args):
 	nperm = args
+	# Setting parameters
+	FDR = 0.1
 
 	# Loading files
 	gene_name = load_file('data/gene_name.pkl') # genes
 	original_pvals = load_file('output/original_pvalues.pkl')
 	filename = 'output/permutations/pvalues/pvalues_'
-	g = len(gene_name) # obtaining the number of genes
+	g = len(gene_name) # obtaining the number of genes, which is the num of tests
+	causal = load_file('data/causal_genes.pkl')
 
 	# 1. Obtaining null distribution
 	null_distr_fdr = obtain_null_distributions(nperm, g, filename)
 	# 2. Obtaining adjusted p-values
-	adj_pval = pvalComputation(original_pvals, null_distr_fdr, nperm)
+	adj_pval = pvalComputation(original_pvals, null_distr_fdr, nperm*g)
 	save_file('output/adj_pval.pkl', adj_pval)
 
 	# 3. Applying Benjamini-Hochberg method for predicting the associated
 	#    neighbourhoods
+	pred_pos = benjamini_hochberg(adj_pval, original_pvals[:, 0], g, FDR)
 	
-
+	# 4. Contingency table, precision, recall
+	performance(pred_pos, causal, g)
 	return 0
 
+
+def benjamini_hochberg(pval, genes, n_test, q):
+	'''
+	benjamini hochberg procedure
+
+	Input
+	--------------------------
+	pval:      p-values
+	genes:     name of the genes
+	n_test:    number of tests
+	q:         FDR threshold
+
+	Output
+	--------------------------
+	pos_gene:  name of genes predicted as associated
+	'''
+	idx = np.argsort(pval)
+	order_pval = pval[idx]
+	order_gene = genes[idx] 
+	thresholds = (np.arange(1, n_test + 1)*q)/n_test
+	v_set = np.where(order_pval <= thresholds)
+	predicted_pos = np.zeros(len(pval)).astype(int)
+	if(len(v_set[0]) > 0):
+		V = np.max(v_set)
+		predicted_pos[:(V + 1)] = 1
+
+	pos_gene = order_gene[predicted_pos.astype(bool)]
+	return pos_gene
 
 
 def pvalComputation(res, null_distr, nperm):
