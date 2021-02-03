@@ -48,7 +48,6 @@ Command-line arguments:
 
 import numpy as np
 import pandas as pd
-from IPython import embed
 import argparse
 from fastlmm.association import snp_set
 import fastlmm

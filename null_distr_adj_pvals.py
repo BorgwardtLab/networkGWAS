@@ -38,7 +38,6 @@ Command-line arguments:
 
 import numpy as np
 import pandas as pd
-from IPython import embed
 import argparse
 from utils import *
 import re
