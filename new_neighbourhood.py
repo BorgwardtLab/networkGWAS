@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Author: Giulia Muzio
+
 '''
 Script for constructing the list of SNPs
 belonging to the permuted 1-degree neighborhoods

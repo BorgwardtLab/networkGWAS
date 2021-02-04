@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Author: Giulia Muzio
+
 '''
 Script for saving the permuted genes;
 the permutation is done by following

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Author: Giulia Muzio
+
 '''
 Function for performing fastlmm snp-set on lists
 of SNPs belonging to 1-degree neighbourhoods

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Author: Giulia Muzio
+
 '''
 Obtaining the null distribution from the p-values
 obtained by appling snp-set function on the permuted

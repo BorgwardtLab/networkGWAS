@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# Author: Giulia Muzio
+
 import pickle
 import numpy as np
 
