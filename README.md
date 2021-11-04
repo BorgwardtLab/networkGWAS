@@ -1,4 +1,4 @@
-# neighborGWAS
+# networkGWAS
 ## METHOD
 This repository contains the python implementation of neighborGWAS method, which foresees the following steps:
 - calculation of original p-values capturing the association score of each neighbourhood and the phenotype of interest; this is done by using Fast-LMM snp-set function [1] ([**obtain_original_pvalues.py**](obtain_original_pvalues.py))
