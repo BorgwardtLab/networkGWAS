@@ -20,43 +20,39 @@ Inputs:
 - 'data/gene_name.pkl':   		  	numpy vector containing the names of the genes 
 						  		  	included in the network
 
-- 'data/mapping.pkl':    		  	numpy vectors containing 2 columns. One has the 
-								  	name of the genes, in the other the names of the 
-								 	SNPs. This define the mapping between the genes and
-								 	the SNPs. This is necessary for obtaining the neigh-
-								  	bourhood aggregation on the fake network
-
-
-- 'output/permutations/nb_files/':  string where to save the 1-degree aggregations on
+- 'output/permutations':            string where to save the 1-degree aggregations on
 									the permuted networks.
+
 Command-line arguments:
---nperm:    				        integer; it's the number of permutation to perform
-									minimum should be 1000.
-
+--nperm:    				              integer; it's the number of permutation to perform
+--blocksize:    				          integer; it's the size of the blocks.
+--file_nw:    			      	          string; name of the file where the network is saved.
+										  See above for the default.
+--file_genes:    				          string; name of the file where the genes are saved.
+										  See above for the default.
+--outdir:    				              string; name of the output folder.
 '''
-
 import pandas as pd
 import numpy as np
 from utils import *
 import argparse
 import os
 
+
 def main(args):	
 	# Setting parameters
-	nperm = args
+	nperm, blocksize, file_network, file_genes, outdir = args
 
 	# LOADING INPUT FILES
-	network = load_file('data/ppi.pkl') # network
-	gene_name = load_file('data/gene_name.pkl') # genes
-	gene_snps = load_file('data/mapping.pkl') # gene-snp mapping
-	outdir = 'output/permutations/nb_files/'
+	network   = load_file(file_network) # network
+	gene_name = load_file(file_genes) # genes
 
-	neighbourhood_file(network, gene_name, gene_snps, nperm, outdir)
+	neighbourhood_file(network, gene_name, nperm, outdir, blocksize)
 	
 	return 0
 	
 
-def neighbourhood_file(A, gene_name, gene_snps, nperm, outdir):
+def neighbourhood_file(A, gene_name, nperm, outdir, block_size):
 	'''
 	Function for performing the swapping of genes having the same 
 	degree (or close)
@@ -72,34 +68,29 @@ def neighbourhood_file(A, gene_name, gene_snps, nperm, outdir):
 	----------------
 	'''
 	# save the permutations
+	outdir_tot = outdir + '/neighborhoods_' + str(block_size) 
+	if(not os.path.exists(outdir_tot)):
+		os.makedirs(outdir_tot)
+
+
+
 	for j in range(nperm):
-		perm = load_file('output/permutations/permuted_genes/genes_' + str(j) + '.pkl')
 		snp_list = np.array(['snp', 'set']).astype(object)
 		snp_list = snp_list.reshape(1, 2)
-		for i, gene in enumerate(perm):
-			# - i represents the position on the network
-			connected_idx = (A[gene_name[i]].values).astype(bool)
-			# - gene represents instead the snps to be assigned 
-			# to the i-th gene. So, the position on the network 
-			# and the respective neighbours remains. What changes
-			# are the SNPs mapped on the gene
-			snps = gene_snps[gene_snps[:, 1] == gene, 0]
-			# For the connected genes, we don't need to obtain the
-			# actual position on the network, but we need to obtain
-			# the names of the new SNPs
-			connected = perm[connected_idx]
+		gene_snps = load_file(outdir + '/permuted_mapping_' + str(block_size) + '/mapping_' + str(j) + '.pkl')
+		for i, gene in enumerate(gene_name):
+			connected_idx = (A[gene].values).astype(bool)
+			snps = gene_snps[gene]
+			connected = gene_name[connected_idx]
 			for conn in connected:
-				snps = np.concatenate((snps, gene_snps[gene_snps[:, 1] == conn, 0]))
-
+				snps = np.concatenate((snps, gene_snps[conn]))
 
 			snps = np.unique(snps)
 			snp_list = np.concatenate((snp_list, np.c_[snps, np.full(len(snps), 'set_' + str(i))]))
 
 		df = pd.DataFrame(snp_list)
-		if(not os.path.exists(outdir)):
-			os.makedirs(outdir)
 
-		df.to_csv(outdir + 'list_nb1_' + str(j) + '.txt', header = None, index = None, sep = ' ')
+		df.to_csv(outdir + '/neighborhoods_' + str(block_size) +  '/list_nb1_' + str(j) + '.txt', header = None, index = None, sep = ' ')
 
 
 	return 0
@@ -116,11 +107,19 @@ def parse_arguments():
 	nperm:	number of permutations
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--nperm', required = False, default = 1000, type = int)
+	parser.add_argument('--nperm',        required = False, default = 1000, type = int)
+	parser.add_argument('--blocksize',    required = False, default = 50,   type = int)
+	parser.add_argument('--file_nw',   required = False, default = 'data/ppi.pkl')
+	parser.add_argument('--file_genes',   required = False, default = 'data/gene_name.pkl')
+	parser.add_argument('--outdir',       required = False, default = 'output/permutations')
 	args = parser.parse_args()
 
 	nperm = args.nperm
-	return nperm
+	blocksize = args.blocksize
+	file_nw = args.file_nw
+	file_genes = args.file_genes
+	outdir = args.outdir
+	return nperm,  blocksize, file_nw, file_genes, outdir
 
 
 if __name__ == '__main__':
