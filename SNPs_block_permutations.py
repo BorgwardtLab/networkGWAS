@@ -148,7 +148,7 @@ def parse_arguments():
 	parser.add_argument('--file_snps',    required = False, default = 'data/snps_list.pkl')
 	parser.add_argument('--file_mapping', required = False, default = 'data/mapping.pkl')
 	parser.add_argument('--file_genes',   required = False, default = 'data/gene_name.pkl')
-	parser.add_argument('--outdir',       required = False, default = 'data/output/permutations/')
+	parser.add_argument('--outdir',       required = False, default = 'output/permutations/')
 	args = parser.parse_args()
 
 	nperm = args.nperm
