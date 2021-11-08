@@ -2,7 +2,8 @@
 # Author: Giulia Muzio
 
 '''
-Script for saving the permuted genes;
+Script for saving the permuted snp-genes
+mapping;
 the permutation is done by following
 the SNPs-block-permutation strategy
 
