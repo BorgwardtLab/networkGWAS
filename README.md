@@ -4,7 +4,7 @@ This repository contains the python implementation of networkGWAS method, which 
 - calculation of the statistics capturing the association score of each neighbourhood and the phenotype of interest; this is done by using Fast-LMM snp-set function [1] ([**obtain_original_pvalues.py**](obtain_original_pvalues.py))
 - creation of permuted gene-SNPs mapping by permuting block of SNPs of desired size ([**SNPs_block_permutations.py**](SNPs_block_permutations.py))
 - generation of the neighbourhoods aggregation files on the permuted scenarios from before; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step ([**new_neighbourhood.py**](new_neighbourhood.py))
-- obtaining the statistics by using Fast-LMM snp-set function on the permuted data ([**obtain_pvalues_permuted_network.py**](obtain_pvalues_permuted_network.py)); this script accepts as command-line argument the index of the permutation. This structure allows to parallelise the computation when possible. 
+- obtaining the statistics by using Fast-LMM snp-set function on the permuted data ([**obtain_statistics_permuted_network.py**](obtain_statistics_permuted_network.py)); this script accepts as command-line argument the index of the permutation. This structure allows to parallelise the computation when possible. 
 - calculation of the null distribution and adjusted pvalues from the original p-values and the p-values obtained on the permuted networks; reporting of the contingency table, precision and recall ([**null_distr_adj_pvals.py**](null_distr_adj_pvals.py))
 Available here a toy-dataset on which try the method. Detail below.
 
