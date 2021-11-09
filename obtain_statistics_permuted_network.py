@@ -36,11 +36,6 @@ Inputs:
    								          		permuted network
 
 Command-line arguments:
---test          						 			kind of statistical test to be used to obtain the 
-										  				association score with FaST-LMM-Set function. Could 
-										  				be either 'lrt' or 'sc-davies'. Default is "lrt". It 
-										  				should be consistent with what was chosen for the original
-										  				p-values.
 --j                                       index of the permutation for which to launch the FaST-LMM
 										  				snp-set function. This is done for making it easy to paralle-
 										  				lise the computation.
@@ -62,7 +57,7 @@ import os
 
 def main(args):
 	# command line arguments
-	test, j, blocksize, genotype, phenotype, outdir = args
+	j, blocksize, genotype, phenotype, outdir = args
 	
 	# File with the set of SNPs corresponding to the 1-degree neighbourhoods
 	file_sets =  outdir + 'neighborhoods_' +  blocksize +  '/list_nb1_' + j + '.txt'
@@ -73,8 +68,8 @@ def main(args):
 			os.makedirs(outdir) 
 	
 	# Running the method
-	results_df = snp_set(test_snps = genotype,  G0 = None, set_list = file_sets,
-	                         pheno = phenotype,   test = test,    nperm = 0)
+	results_df = snp_set(test_snps = genotype,  G0 = None,    set_list = file_sets,
+	                     pheno = phenotype,     test = 'lrt',    nperm = 0)
 
 	statistics = process_results(results_df)
 	save_file(outdir + 'statistics_' + j + '.pkl', statistics)
@@ -88,11 +83,10 @@ def process_results(results_df):
 	Input
 	-------------
 	results_df:   results from fastlmm snp-set function
-	genes:        name of the genes 
 	
 	Output
 	-------------
-	pvals:        gene-pvalue numpy array
+	statistics:   gene-statistics numpy array
 	'''
 	statistics = (2*(results_df['LogLikeAlt'] - results_df['LogLikeNull'])).values
 	return statistics
@@ -112,7 +106,6 @@ def parse_arguments():
 	j:          index of permutation
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--test',      required = False, default = "lrt")
 	parser.add_argument('--j',         required = True)
 	parser.add_argument('--blocksize', required = False, default = '50')
 	parser.add_argument('--genotype',  required = False, default = 'data/plink/snp_matrix')
@@ -121,7 +114,6 @@ def parse_arguments():
 	
 	args = parser.parse_args()
 
-	test       = args.test
 	j          = args.j
 	blocksize  = args.blocksize
 	genotype   = args.genotype 
