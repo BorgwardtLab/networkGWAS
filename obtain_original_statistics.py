@@ -30,11 +30,6 @@ Inputs:
 										  i.e. the pvalues obtained on the original network. These
 										  p-values has to be adjusted using the degree-preserving
 										  permutation strategy.
-
-Command-line arguments:
---test          						  kind of statistical test to be used to obtain the 
-										  association score with FaST-LMM-Set function. Could 
-										  be either 'lrt' or 'sc-davies'. Default is "lrt".
 '''
 
 import numpy as np
@@ -48,26 +43,16 @@ import re
 
 def main(args):
 	# command line arguments
-	test = args
+	genotype, phenotype, file_gene, fileout, file_sets = args
 	
-	# LOADING DATA
-	# 1. SNP matrix's location in plink format
-	genotype = 'data/plink/snp_matrix' # it should be in bed/bim/fam format
-	# 2. Phenotype's plink file location
-	phenotype = 'data/plink/phenotype.pheno'
-	# 3. File with the set of SNPs corresponding to the 1-degree neighbourhoods
-	file_sets = 'data/plink/neighborhood_list.txt'
-	# 4. Loading the names of the genes
-	genes = load_file('data/gene_name.pkl')
-	# Defining the output filename
-	fileout = 'output/original_pvalues.pkl'
+	genes = load_file(file_gene)
 	
 	# Running the method
 	results_df = snp_set(test_snps = genotype, G0 = None, set_list = file_sets,
-	                     pheno = phenotype, test = test, nperm = 0)
+	                     pheno = phenotype, test = 'lrt', nperm = 0)
 
-	pvals = process_results(results_df, genes)
-	save_file(fileout, pvals)
+	statistics = process_results(results_df, genes)
+	save_file(fileout, statistics)
 	return 0
 
 
@@ -82,7 +67,7 @@ def process_results(results_df, genes):
 	
 	Output
 	-------------
-	pvals:        gene-pvalue numpy array
+	pvals:        gene-statistics numpy array
 	'''
 	sets = results_df['SetId']
 	list_num = []
@@ -91,9 +76,9 @@ def process_results(results_df, genes):
 
 
 	idx = np.argsort(list_num)
-	pvals_not_ordered = results_df['P-value']
-	pvals = pvals_not_ordered[idx]
-	return np.c_[genes, pvals]
+	statistics = (2*(results_df['LogLikeAlt'] - results_df['LogLikeNull'])).values
+	statistics = statistics[idx]
+	return np.c_[genes, statistics]
 
 
 def parse_arguments():
@@ -109,15 +94,21 @@ def parse_arguments():
 				obtaining p-values
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--test', required = False, default = "lrt")
+	parser.add_argument('--genotype',  required = False, default = 'data/plink/snp_matrix')
+	parser.add_argument('--phenotype', required = False, default = 'data/plink/phenotype.pheno')
+	parser.add_argument('--file_gene', required = False, default = 'data/gene_name.pkl')
+	parser.add_argument('--fileout',  required = False, default = 'output/original_statistics.pkl')
+	parser.add_argument('--file_sets',required = False, default = 'data/plink/neighborhood_list.txt')
+	
 	args = parser.parse_args()
-
-	test     = args.test
-	return test
+	genotype   = args.genotype 
+	phenotype  = args.phenotype 
+	file_gene  = args.file_gene
+	fileout    = args.fileout
+	file_sets  = args.file_sets
+	return genotype, phenotype, file_gene, fileout, file_sets
 
 
 if __name__ == '__main__':
     arguments = parse_arguments()
     main(arguments)
-
-	
