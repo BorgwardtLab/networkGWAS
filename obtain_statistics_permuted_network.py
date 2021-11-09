@@ -119,7 +119,7 @@ def parse_arguments():
 	genotype   = args.genotype 
 	phenotype  = args.phenotype 
 	outdir     = args.outdir
-	return test, j, blocksize, genotype, phenotype, outdir
+	return j, blocksize, genotype, phenotype, outdir
 
 
 if __name__ == '__main__':
