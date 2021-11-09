@@ -21,7 +21,7 @@ File in input:
 										 
 
 Command-line arguments:
---nperm:    				              integer; it's the number of permutation to perform
+--nperm:    				                  integer; it's the number of permutation to perform
 --blocksize:    				          integer; it's the size of the blocks.
 --file_snps:    				          string; name of the file where the SNPs are saved.
 										  See above for the default.
@@ -144,7 +144,7 @@ def parse_arguments():
 	nperm:	number of permutations
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--nperm',        required = False, default = 1000, type = int)
+	parser.add_argument('--nperm',        required = False, default = 100, type = int)
 	parser.add_argument('--blocksize',    required = False, default = 50,   type = int)
 	parser.add_argument('--file_snps',    required = False, default = 'data/snps_list.pkl')
 	parser.add_argument('--file_mapping', required = False, default = 'data/mapping.pkl')
