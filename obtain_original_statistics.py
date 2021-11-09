@@ -30,6 +30,9 @@ Inputs:
 										  i.e. the pvalues obtained on the original network. These
 										  p-values has to be adjusted using the degree-preserving
 										  permutation strategy.
+
+Command-line arguments:
+
 '''
 
 import numpy as np
@@ -112,3 +115,5 @@ def parse_arguments():
 if __name__ == '__main__':
     arguments = parse_arguments()
     main(arguments)
+
+	
