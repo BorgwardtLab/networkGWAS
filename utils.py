@@ -62,6 +62,10 @@ def performance(pos_snps, causal, p):
 	print('TN: ' + str(tn) )
 	print('FN: ' + str(fn) )
 	print('-----------------')
-	print('Precision: ' + str(np.round(tp/(tp + fp), 3)))
-	print('Recall: ' + str(np.round(tp/(tp + fn), 3)))
+	if tp > 0:
+		print('Precision: ' + str(np.round(tp/(tp + fp), 3)))
+		print('Recall: ' + str(np.round(tp/(tp + fn), 3)))
+	else:
+		print('Precision: 0')
+		print('Recall: 0')
 	return 0
