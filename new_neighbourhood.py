@@ -9,28 +9,28 @@ for performing the 1-degree neighbourhood aggregation
 on the permuted network.
 
 Inputs:
-- 'data/ppi.pkl': 		  		  	PPI network in form of pandas DataFrame. The
-								  	keys of the data frame are the names of the 
-									genes included in the network. The values of
-									the dataframe is the non-weighted adjacency 
-									matrix of the PPI network, e.g. 1 when there is
-								 	an edge between the 2 genes, and 0 when there is
-								  	no edge, e.g. no interaction
+- 'data/ppi.pkl': 		  		  PPI network in form of pandas DataFrame. The
+						  keys of the data frame are the names of the 
+						  genes included in the network. The values of
+						  the dataframe is the non-weighted adjacency 
+						  matrix of the PPI network, e.g. 1 when there is
+						  an edge between the 2 genes, and 0 when there is
+						  no edge, e.g. no interaction
 
-- 'data/gene_name.pkl':   		  	numpy vector containing the names of the genes 
-						  		  	included in the network
+- 'data/gene_name.pkl':   		  	  numpy vector containing the names of the genes 
+						  included in the network
 
-- 'output/permutations':            string where to save the 1-degree aggregations on
-									the permuted networks.
+- 'output/permutations':                          string where to save the 1-degree aggregations on
+						  the permuted networks.
 
 Command-line arguments:
---nperm:    				              integer; it's the number of permutation to perform
---blocksize:    				          integer; it's the size of the blocks.
+--nperm:    				          integer; it's the number of permutation to perform
+--blocksize:    				  integer; it's the size of the blocks.
 --file_nw:    			      	          string; name of the file where the network is saved.
-										  See above for the default.
---file_genes:    				          string; name of the file where the genes are saved.
-										  See above for the default.
---outdir:    				              string; name of the output folder.
+					          See above for the default.
+--file_genes:    				  string; name of the file where the genes are saved.
+					          See above for the default.
+--outdir:    				          string; name of the output folder.
 '''
 import pandas as pd
 import numpy as np
@@ -107,9 +107,9 @@ def parse_arguments():
 	nperm:	number of permutations
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--nperm',        required = False, default = 1000, type = int)
+	parser.add_argument('--nperm',        required = False, default = 100, type = int)
 	parser.add_argument('--blocksize',    required = False, default = 50,   type = int)
-	parser.add_argument('--file_nw',   required = False, default = 'data/ppi.pkl')
+	parser.add_argument('--file_nw',      required = False, default = 'data/ppi.pkl')
 	parser.add_argument('--file_genes',   required = False, default = 'data/gene_name.pkl')
 	parser.add_argument('--outdir',       required = False, default = 'output/permutations')
 	args = parser.parse_args()
