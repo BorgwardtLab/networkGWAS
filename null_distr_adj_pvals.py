@@ -31,12 +31,6 @@ Inputs:
 								   degree-preserving permutation strategy
 
 - 'data/causal_genes.pkl':         name of the causal genes
-
-
-Command-line arguments:
---j                                index of the permutation for which to launch the FaST-LMM
-								   snp-set function. This is done for making it easy to paralle-
-								   lise the computation.
 '''
 
 import numpy as np
@@ -47,26 +41,25 @@ import re
 
 
 def main(args):
-	nperm = args
-	# Setting parameters
-	FDR = 0.1
+	nperm, blocksize, FDR, file_gene, file_original, fileout, causal_gene = args
 
 	# Loading files
-	gene_name = load_file('data/gene_name.pkl') # genes
-	original_pvals = load_file('output/original_pvalues.pkl')
-	filename = 'output/permutations/pvalues/pvalues_'
+	gene_name = load_file(file_gene) # genes
+	original_stats = load_file(file_original)
+	file_permuted_stats = fileout + 'permutations/statistics_' + str(blocksize) + '/statistics_'
+	causal = load_file(causal_gene)
 	g = len(gene_name) # obtaining the number of genes, which is the num of tests
-	causal = load_file('data/causal_genes.pkl')
-
+	
 	# 1. Obtaining null distribution
-	null_distr_fdr = obtain_null_distributions(nperm, g, filename)
+	null_distr_fdr = obtain_null_distributions(nperm, g, file_permuted_stats)
+
 	# 2. Obtaining adjusted p-values
-	adj_pval = pvalComputation(original_pvals, null_distr_fdr, nperm*g)
-	save_file('output/adj_pval.pkl', adj_pval)
+	adj_pval = pvalComputation(original_stats, null_distr_fdr, nperm*g)
+	save_file( fileout + 'pvals.pkl', adj_pval)
 
 	# 3. Applying Benjamini-Hochberg method for predicting the associated
 	#    neighbourhoods
-	pred_pos = benjamini_hochberg(adj_pval, original_pvals[:, 0], g, FDR)
+	pred_pos = benjamini_hochberg(adj_pval, original_stats[:, 0], g, FDR)
 	
 	# 4. Contingency table, precision, recall
 	performance(pred_pos, causal, g)
@@ -148,8 +141,8 @@ def obtain_null_distributions(nperm, g, filename):
 	null_distrFDR = np.array([])
 	
 	for j in range(nperm):
-		pvalues = load_file(filename + str(j) + '.pkl')
-		null_distrFDR = np.concatenate((null_distrFDR, pvalues[:, 1].astype(float)))
+		statistics = load_file(filename + str(j) + '.pkl')
+		null_distrFDR = np.concatenate((null_distrFDR, statistics.astype(float)))
 	
 
 	return null_distrFDR
@@ -166,11 +159,24 @@ def parse_arguments():
 	nperm:	number of permutations
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--nperm', required = False, default = 1000, type = int)
+	parser.add_argument('--nperm', required = False, default = 100, type = int)
+	parser.add_argument('--blocksize', required = False, default = 50, type = int)
+	parser.add_argument('--fdr', required = False, default = 0.1, type = float)
+	parser.add_argument('--file_gene', required = False, default = 'data/gene_name.pkl')
+	parser.add_argument('--file_original', required = False, default = 'output/original_statistics.pkl')
+	parser.add_argument('--fileout', required = False, default = 'output/')
+	parser.add_argument('--causal_gene', required = False, default = 'data/causal_genes.pkl')
+	
 	args = parser.parse_args()
 
 	nperm = args.nperm
-	return nperm
+	blocksize = args.blocksize
+	FDR = args.fdr
+	file_gene = args.file_gene
+	file_original = args.file_original
+	fileout = args.fileout
+	causal_gene = args.causal_gene
+	return nperm, blocksize, FDR, file_gene, file_original, fileout, causal_gene
 
 
 if __name__ == '__main__':
