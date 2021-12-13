@@ -1,6 +1,7 @@
 # networkGWAS
 ## METHOD
 This repository contains the python implementation of networkGWAS method, which foresees the following steps:
+- creation of the 1-hop neighborhood aggregation of the SNPs according to the biological network given as input ([**original_neighborhood_aggregation.py**](original_neighborhood_aggregation.py))
 - calculation of the statistics capturing the association score of each neighbourhood and the phenotype of interest; this is done by using Fast-LMM snp-set function [1] ([**obtain_original_statistics.py**](obtain_original_statistics.py))
 - creation of permuted gene-SNPs mapping by permuting block of SNPs of desired size ([**SNPs_block_permutations.py**](SNPs_block_permutations.py))
 - generation of the neighbourhoods aggregation files on the permuted scenarios from before; the structure of the network remains the same, what changes is the mapping of the SNPs, which is defined in the previous step ([**new_neighbourhood.py**](new_neighbourhood.py))
