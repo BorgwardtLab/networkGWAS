@@ -4,6 +4,7 @@
 import pickle
 import numpy as np
 
+
 def save_file(filename, data):
 	'''
 	Function for saving file in the pickle format
@@ -34,38 +35,3 @@ def load_file(filename):
 	'''
 	with open(filename, 'rb') as f:
 		return pickle.load(f)
-
-
-def performance(pos_snps, causal, p):
-	'''
-	Function for evaluating the results of the methods
-	True and false positives, true and false negatives,
-	precision and recall.
-
-	Input
-	-----------
-	pos_snps:    prediction
-	causal:      ground truth
-	p:           number of SNPs, features
-
-	Output
-	-----------
-	'''
-	tp = len(np.intersect1d(pos_snps, causal))
-	fp = len(np.setdiff1d(pos_snps, causal))
-	fn = len(causal) - tp
-	tn = p - (tp + fp + fn)
-
-	print('\nPERFORMANCE:')
-	print('TP: ' + str(tp) )
-	print('FP: ' + str(fp) )
-	print('TN: ' + str(tn) )
-	print('FN: ' + str(fn) )
-	print('-----------------')
-	if tp > 0:
-		print('Precision: ' + str(np.round(tp/(tp + fp), 3)))
-		print('Recall: ' + str(np.round(tp/(tp + fn), 3)))
-	else:
-		print('Precision: 0')
-		print('Recall: 0')
-	return 0
