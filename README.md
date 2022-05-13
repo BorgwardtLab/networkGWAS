@@ -11,12 +11,21 @@ Available here a toy-dataset on which try the method. Detail below.
 The toy dataset is comprised of:
 - genotype file in Plink .bed/.bim/.fam format ("data/genotype.bed", "data/genotype.bim", "data/genotype.fam")
 - phenotype in Plink .pheno format ("data/y_50.pheno")
-- the adjacency matrix of the biological network, i.e., the protein-protein interaction network in Pickle format ("data/PPI_adj.pkl"). In particular, the adjacency matrix is saved as a pandas dataframe, where the index and columns are the names of the proteins, which represents the nodes of the PPI network.
+- the adjacency matrix of the biological network, i.e., the protein-protein interaction (PPI) network in Pickle format ("data/PPI_adj.pkl"). In particular, the adjacency matrix is saved as a pandas dataframe, where the index and columns are the names of the proteins, which represents the nodes of the PPI network.
 
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
-## 
+## DATA AVAILABILITY
+In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
 
+### _A. thaliana_ 
+- **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center);
+- **phenotype**: the natural phenotypes for _A. thaliana_ have been downloaded from the AraPheno database (https://arapheno.1001genomes.org/phenotypes/);
+- **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _A. thaliana_.
+
+### _S. cerevisiae_
+- **genotype & phenotype**: genotype and phenotype for the model organism _S. cerevisiae_ are available at http://1002genomes.u-strasbg.fr/files/, which is the repository of the publication [3]; 
+- **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _S. cerevisiae_.
 
 ## DEPENDENCIES
 The code only supports python3 and requires the following packages and submodules:
@@ -29,7 +38,9 @@ The code only supports python3 and requires the following packages and submodule
 
 [1] G. Muzio, L. O’Bray, L. Meng-Papaxanthos, J. Klatt, K. Borgwardt, networkGWAS: A network-based approach for genome-wide association studies in structured populations, bioRxiv, https://doi.org/10.1101/2021.11.11.468206.
 
-[2] C. Lippert, J. Xiang, D. Horta, C. Widmer, C. Kadie, D. Heckerman, J. Listgarten, Greater power and computational efficiency for kernel-based association testing of sets of genetic variants, Bioinformatics, Volume 30, Issue 22, Pages 3206–3214, 2014.
+[2] C. Lippert, J. Xiang, D. Horta, C. Widmer, C. Kadie, D. Heckerman, J. Listgarten, Greater power and computational efficiency for kernel-based association testing of sets of genetic variants, Bioinformatics 30(22):3206–3214, 2014.
+
+[3] J. Peter, M. De Chiara, A. Friedrich et al. Genome evolution across 1,011 Saccharomyces cerevisiae isolates. Nature 556, 339–344, 2018.
 
 ## CONTACT
 giulia.muzio@bsse.ethz.ch
