@@ -1,5 +1,5 @@
 # networkGWAS
-## METHOD
+
 This repository contains the python implementation of networkGWAS method, which foresees the following steps:
 1) neighborhood aggregation of the SNPs according to the biological network ([**1_nb_aggregation.py**](1_nb_aggregation.py));
 2) 2-level permutation procedure, which combines a circular permutation of the SNPs and degree-preserving permutation of the network ([**2_circPerm_nwPerm.py**](2_circPerm_nwPerm.py));
