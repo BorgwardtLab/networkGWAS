@@ -110,12 +110,12 @@ In order to reproduce the results presented in the manuscript, here a list of th
 - **phenotype**: simulated according to the procedure detailed in [1];
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _H. sapiens_.
 
-### _A. thaliana_ 
+### _A. thaliana_ natural phenotypes
 - **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center);
 - **phenotype**: the natural phenotypes for _A. thaliana_ have been downloaded from the AraPheno database (https://arapheno.1001genomes.org/phenotypes/);
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _A. thaliana_.
 
-### _S. cerevisiae_
+### _S. cerevisiae_ natural phenotypes
 - **genotype & phenotype**: genotype and phenotype for the model organism _S. cerevisiae_ are available at http://1002genomes.u-strasbg.fr/files/, which is the repository of the publication [3]; 
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _S. cerevisiae_.
 
