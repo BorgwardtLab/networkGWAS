@@ -13,7 +13,6 @@ Available here a toy-dataset on which try the method. Detail below.
 The toy dataset is comprised of:
 - genotype file in Plink .bed/.bim/.fam format ("data/genotype.bed", "data/genotype.bim", "data/genotype.fam")
 - simulated phenotype in Plink .pheno format ("data/y_50.pheno")
-- the numpy array of the causal genes set as causal in the simulation of the phenotype ("data/genes_50.pkl")
 - the adjacency matrix of the biological network, i.e., the protein-protein interaction (PPI) network in Pickle format ("data/PPI_adj.pkl"). In particular, the adjacency matrix is saved as a pandas dataframe, where the index and columns are the names of the genes, which represents the nodes of the PPI network.
 - the dictionary presenting the nodes (gene) as keys with as values a numpy boolean vector that presents True where the SNPs (ordered according to the .bim file) are mapped onto that particular gene ("data/gene_snps_index.pkl")
 
@@ -53,7 +52,7 @@ python3 3_LMM.py \
 --nbs results/settings/neighborhoods.txt \
 --kernel lin \
 --odir results/llr/ \
---ofile llr.pkl \
+--ofile llr.pkl
 ```
 3.2) running the lrt calculation on the permuted settings:
 ```
@@ -64,16 +63,39 @@ python3 3_LMM.py \
 --kernel lin \
 --j 0 \
 --odir results/llr/permuted \
---ofile llr_ \
+--ofile llr_
 ```
+Note that since the permutation id is a command line argument, ([**3_LMM.py**](3_LMM.py)) for the different permutations can be run in parallel. 
+
 4) obtaining the _p_-values:
 ```
-python3
+python3 4_obtain_pvals.py \
+--inpath results/llr/llr.pkl \
+--inpathperm results/llr/permuted/llr_ \
+--nperm 100 \
+--dirnd results/null_distr/ \
+--dirpv results/pvals/ \
+--fignd null_distr.png \ 
+--figpv qqplot.png \
+--outpathnd null_distr.pkl\
+--outpathpv pvals.pkl
 ```
-5) identifying the statistically associated neighborhoods:
+5) identifying the statistically associated neighborhoods in case of one phenotype:
 ```
-python3
+python3 5_associated_neighborhoods.py \
+--nw 'data/PPI_adj.pkl' \
+--pv 'results/pvals/pvals.pkl' \
+--q1 0.05 
 ```
+or  identifying the statistically associated neighborhoods in case of multiple phenotypes:
+```
+python3 5_associated_neighborhoods.py \
+--nw 'data/PPI_adj.pkl' \
+--pv 'results/pvals/pvals_pheno1.pkl' 'results/pvals/pvals_pheno2.pkl' 'results/pvals/pvals_pheno3.pkl' \
+--q1 0.05 \
+--q2 0.05
+```
+
 
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
