@@ -20,12 +20,12 @@ For more details on the Plink formats, please refer to https://www.cog-genomics.
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
 
-## Semi-simulated common-variant setting
+### Semi-simulated common-variant setting
 - **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center);
 - **phenotype**: simulated according to the procedure detailed in [1];
 - **PPI network**: the PPI network is downloaded from the The Arabidopsis Information Resource (TAIR) database (https://www.arabidopsis.org/).
 
-## Fully synthetic rare-variant setting
+### Fully synthetic rare-variant setting
 - **genotype**: simulated using sim1000G package [4] giving as input the VCF from Phase III 1000 genomes sequencing data;
 - **phenotype**: simulated according to the procedure detailed in [1];
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _H. sapiens_.
