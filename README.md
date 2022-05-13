@@ -4,7 +4,7 @@ This repository contains the python implementation of networkGWAS method, which 
 1) neighborhood aggregation of the SNPs according to the biological network ([**1_nb_aggregation.py**](1_nb_aggregation.py));
 2) 2-level permutation procedure, which combines a circular permutation of the SNPs and degree-preserving permutation of the network ([**2_circPerm_nwPerm.py**](2_circPerm_nwPerm.py));
 3) calculation of the log-likelihood ratio (lrt) test statistics on both the non-permuted setting and the permuted settings by employing the modified FaST-LMM snp-set function, which is available in the folder "LMM" ([**3_LMM.py**](3_LMM.py));
-4) calculation of the p-values. Per each neighborhood, this is done by: (i) obtaining the null distribution through the pooling of the lrt statitistics on the permuted settings, (ii) calculating the ratio of statistics in the null distribution that are larger than or equal to the statistic for the neighborhood obtained on the non-permuted setting ([**4_obtain_pvals.py**](4_obtain_pvals.py)).
+4) calculation of the _p_-values. Per each neighborhood, this is done by: (i) obtaining the null distribution through the pooling of the lrt statitistics on the permuted settings, (ii) calculating the ratio of statistics in the null distribution that are larger than or equal to the statistic for the neighborhood obtained on the non-permuted setting ([**4_obtain_pvals.py**](4_obtain_pvals.py)).
 5) identifying the statistically associated neighborhood by means of the Benjamini-Hochberg (B-H) procedure in case of analysing one phenotype only or by using the hierarchical procedure based on B-H procedure in case of multiple phenotypes ([**5_associated_neighborhoods.py**](5_associated_neighborhoods.py)).
 
 Available here a toy-dataset on which try the method. Detail below.
@@ -20,12 +20,60 @@ The toy dataset is comprised of:
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
 ## EXAMPLES
+1) running the neighborhood aggregation operation:
 ```
-python3 1_nb_aggregation.py --i data --o results/settings --g2s gene_snps_index.pkl --bim genotype.bim --nw PPI_adj.pkl --nbs ne
-ighborhoods.txt
-
+python3 1_nb_aggregation.py \
+--i data \
+--o results/settings \
+--g2s gene_snps_index.pkl \
+--bim genotype.bim \
+--nw PPI_adj.pkl \
+--nbs neighborhoods.txt
 ```
-
+2) running the generation of the permuted settings:
+```
+python3 2_circPerm_nwPerm.py \
+--i data \
+--g2s gene_snps_index.pkl \
+--bim genotype.bim \
+--nw PPI_adj.pkl \
+--perm 100 \
+--alpha 0.5 \
+--seed 42 \
+--onwdir results/settings/permutations/networks/ \
+--onbdir results/settings/permutations/neighborhoods/ \
+--onw nw_ \
+--onb nbs_
+```
+3.1) running the lrt calculation on the non-permuted setting:
+```
+python3 3_LMM.py \
+--genotype data/genotype \
+--phenotype data/y_50.pheno \
+--nbs results/settings/neighborhoods.txt \
+--kernel lin \
+--odir results/llr/ \
+--ofile llr.pkl \
+```
+3.2) running the lrt calculation on the permuted settings:
+```
+python3 3_LMM.py \
+--genotype data/genotype \
+--phenotype data/y_50.pheno \
+--nbs results/settings/permutations/neighborhoods/nbs_ \
+--kernel lin \
+--j 0 \
+--odir results/llr/permuted \
+--ofile llr_ \
+```
+4) obtaining the _p_-values:
+```
+python3
+```
+5) identifying the statistically associated neighborhoods:
+```
+python3
+```
 
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
