@@ -19,7 +19,7 @@ The toy dataset is comprised of:
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
 ## EXAMPLES
-1) running the neighborhood aggregation operation:
+#### 1) running the neighborhood aggregation operation:
 ```
 python3 1_nb_aggregation.py \
 --i data \
@@ -29,7 +29,7 @@ python3 1_nb_aggregation.py \
 --nw PPI_adj.pkl \
 --nbs neighborhoods.txt
 ```
-2) running the generation of the permuted settings:
+#### 2) running the generation of the permuted settings:
 ```
 python3 2_circPerm_nwPerm.py \
 --i data \
@@ -44,7 +44,7 @@ python3 2_circPerm_nwPerm.py \
 --onw nw_ \
 --onb nbs_
 ```
-3.1) running the lrt calculation on the non-permuted setting:
+#### 3.1) running the lrt calculation on the non-permuted setting:
 ```
 python3 3_LMM.py \
 --genotype data/genotype \
@@ -54,7 +54,7 @@ python3 3_LMM.py \
 --odir results/llr/ \
 --ofile llr.pkl
 ```
-3.2) running the lrt calculation on the permuted settings:
+#### 3.2) running the lrt calculation on the permuted settings:
 ```
 python3 3_LMM.py \
 --genotype data/genotype \
@@ -67,7 +67,7 @@ python3 3_LMM.py \
 ```
 Note that since the permutation id is a command line argument, ([**3_LMM.py**](3_LMM.py)) for the different permutations can be run in parallel. 
 
-4) obtaining the _p_-values:
+#### 4) obtaining the _p_-values:
 ```
 python3 4_obtain_pvals.py \
 --inpath results/llr/llr.pkl \
@@ -80,7 +80,7 @@ python3 4_obtain_pvals.py \
 --outpathnd null_distr.pkl\
 --outpathpv pvals.pkl
 ```
-5) identifying the statistically associated neighborhoods in case of one phenotype:
+#### 5) identifying the statistically associated neighborhoods in case of one phenotype:
 ```
 python3 5_associated_neighborhoods.py \
 --nw 'data/PPI_adj.pkl' \
