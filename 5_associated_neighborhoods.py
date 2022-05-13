@@ -19,22 +19,21 @@ from IPython import embed
 
 def main(args):
 	# Loading the causal genes
-	causal_genes = load_file(args.cg)
 	nw = load_file(args.nw)
 	
 	if(len(args.pv) == 1):
 		# Benjamini-hochberg procedure
 		pv = load_file(args.pv[0])
 		pos = benjamini_hochberg(pv[1], pv[0], args.q1)
-		contingency_table(pos, causal_genes, nw)
+		
 	else:
 		# Hierarchical benjamini-hochberg-based procedure
-		pv = read_pv(args.pv)
+		pv, cg = read_pv(args.pv, args.cg)
 		pos_pheno = step1(pv, args)
 		for pheno in pos_pheno: # step 2
 			print('Phenotype {}:'.format(pheno))
 			pos = benjamini_hochberg(pv[pheno][1], pv[pheno][0], args.q2*len(pos_pheno)/len(pv))
-			contingency_table(pos, causal_genes, nw)
+			
 
 
 
@@ -66,70 +65,6 @@ def step1(pvs, args):
 	[print(ph) for ph in pos_pheno]
 	print('-----------------------')
 	return pos_pheno
-
-
-def read_pv(filenames):
-	'''
-	Function for reading the p-values in case of
-	multiple phenotypes analysed.
-
-	Input
-	---------
-	filenames:  path to the pvalues
-	
-	Output
-	---------
-	pv:         dictionary with the results for all the 
-				phenotypes
-	'''
-	pv = {}
-	for i, name in enumerate(filenames):
-		pv[i] = load_file(name)
-	
-	return pv
-
-
-def contingency_table(pos, causal_genes, nw):
-	'''
-	Function for calculating precision and recall
-
-	Input
-	--------
-	pos:           id of the neighborhood(s) (namely the 
-				   name of the center node(s)) that are
-				   predicted as associated with the 
-				   phenotype
-	causal_genes:  ground truth, e.g., the genes used 
-				   as causal in the simulations
-	nw:			   PPI network
-
-	Output
-	--------
-	'''
-	if(len(pos) > 0):
-		genes = np.array(list(nw.keys()))
-		tot = np.array([])
-		for g in pos:
-			# because we tested the nbs
-			nb = genes[nw[g].values.astype(bool)]
-			tot_nb = np.unique(np.concatenate((nb, [g])))
-			tot = np.concatenate((tot, tot_nb))
-		tot = np.unique(tot)
-		
-		tp = len(np.intersect1d(tot, causal_genes))
-		fn = len(causal_genes) - tp
-		fp = len(tot) - tp
-		tn = len(genes) - (tp + fn + fp)
-
-		prec = tp/(tp+fp)
-		rec = tp/(tp+fn)
-	else:
-		prec = rec = 0
-
-	print('Precision: {}'.format(prec))
-	print('Recall: {}'.format(rec))
-	print('-----------------------')
-
 
 
 def simes_pval(pv):
@@ -207,7 +142,6 @@ def parse_arguments():
 			   procedure
 	'''
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--cg', required = False, default = 'data/genes_50.pkl')
 	parser.add_argument('--nw', required = False, default = 'data/PPI_adj.pkl')
 	parser.add_argument('--pv', required = False, nargs = '+',
 						default = ['results/pvals/pvals.pkl'])

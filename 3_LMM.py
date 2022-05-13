@@ -102,7 +102,7 @@ def parse_arguments():
 							   the analysis is performed on the non-permuted setting.')
 	parser.add_argument('--odir',       required = True, 
 							   help = 'folder where to save the results. For example,\
-							    "results/llr/in case of the non-permuted scenario,\
+							    "results/llr/"" in case of the non-permuted scenario,\
 							    and "results/llr/permuted/" otherwise.')
 	parser.add_argument('--ofile',      required = True, 
 							   help = 'filename for the results. "llr.pkl" in case\
