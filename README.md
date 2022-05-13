@@ -20,11 +20,11 @@ The toy dataset is comprised of:
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
 ## EXAMPLES
-'''
+```
 python3 1_nb_aggregation.py --i data --o results/settings --g2s gene_snps_index.pkl --bim genotype.bim --nw PPI_adj.pkl --nbs ne
 ighborhoods.txt
 
-'''
+```
 
 
 ## DATA AVAILABILITY
