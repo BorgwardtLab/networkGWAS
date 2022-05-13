@@ -5,7 +5,7 @@ This repository contains the python implementation of networkGWAS method, which 
 2) 2-level permutation procedure, which combines a circular permutation of the SNPs and degree-preserving permutation of the network ([**2_circPerm_nwPerm.py**](2_circPerm_nwPerm.py));
 3) calculation of the log-likelihood ratio (lrt) test statistics on both the non-permuted setting and the permuted settings by employing the modified FaST-LMM snp-set function, which is available in the folder "LMM" ([**3_LMM.py**](3_LMM.py));
 4) calculation of the p-values. Per each neighborhood, this is done by: (i) obtaining the null distribution through the pooling of the lrt statitistics on the permuted settings, (ii) calculating the ratio of statistics in the null distribution that are larger than or equal to the statistic for the neighborhood obtained on the non-permuted setting ([**4_obtain_pvals.py**](4_obtain_pvals.py)).
-5)
+5) identifying the statistically associated neighborhood by means of the Benjamini-Hochberg (B-H) procedure in case of analysing one phenotype only or by using the hierarchical procedure based on B-H procedure in case of multiple phenotypes ([**5_associated_neighborhoods.py**](5_associated_neighborhoods.py)).
 
 Available here a toy-dataset on which try the method. Detail below.
 
@@ -20,6 +20,12 @@ The toy dataset is comprised of:
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
 ## EXAMPLES
+'''
+python3 1_nb_aggregation.py --i data --o results/settings --g2s gene_snps_index.pkl --bim genotype.bim --nw PPI_adj.pkl --nbs ne
+ighborhoods.txt
+
+'''
+
 
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
