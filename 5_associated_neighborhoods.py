@@ -34,7 +34,38 @@ def main(args):
 			print('Phenotype {}:'.format(pheno))
 			pos = benjamini_hochberg(pv[pheno][1], pv[pheno][0], args.q2*len(pos_pheno)/len(pv))
 			
+	# Printing out the results
+	genes = analysis(pos, nw)
+	save_file(args.o, genes)
 
+
+def analysis(pos, nw):
+	'''
+	Function for analysing the statistically
+	associated neighborhoods
+
+	Input
+	----------------
+	pos:    ID of the statistically associated neighborhoods
+		    (the ID is the name of the center node gene)
+	nw:     biological network adjacency matrix
+
+	Output
+	----------------
+	tot:    the numpy array of uniquely associated genes across
+			the statistically associated neighborhoods
+	'''
+	nodes = np.array(list(nw.keys()))
+	tot = np.array([])
+	for p in pos:
+		connected_idx = nw[p].values.astype(bool)
+		connected = nodes[connected_idx]
+		print('The neighborhood of {} is composed of {} genes.'.format(p, len(connected)))
+		tot = np.concatenate((tot, connected))
+
+	tot = np.unique(tot)
+	print('{} unique genes in total.'.format(len(tot)))
+	return tot
 
 
 def step1(pvs, args):
@@ -140,6 +171,7 @@ def parse_arguments():
 	args.q1:   FDR level we want to control at using B-H
 	args.q2:   FDR level we want to control at using B-H-based hierarchical
 			   procedure
+	args.o:    where to save the list of associated genes 
 	'''
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--nw', required = False, default = 'data/PPI_adj.pkl')
@@ -147,6 +179,7 @@ def parse_arguments():
 						default = ['results/pvals/pvals.pkl'])
 	parser.add_argument('--q1', required = False, type = float, default = 0.1)
 	parser.add_argument('--q2', required = False, type = float, default = 0.1)
+	parser.add_argument('--o',  required = False, default = 'results/associated.pkl')
 	args = parser.parse_args()
 
 	return args
