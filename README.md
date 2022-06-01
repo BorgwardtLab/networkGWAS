@@ -101,17 +101,17 @@ python3 5_associated_neighborhoods.py \
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
 
 ### Semi-simulated common-variant setting
-- **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center);
+- **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center); genetic variants presenting MAF < 0.05 have been filtered out;
 - **phenotype**: simulated according to the procedure detailed in [1];
 - **PPI network**: the PPI network is downloaded from the The Arabidopsis Information Resource (TAIR) database (https://www.arabidopsis.org/).
 
 ### Fully synthetic rare-variant setting
-- **genotype**: simulated using sim1000G package [4] giving as input the VCF from Phase III 1000 genomes sequencing data;
+- **genotype**: simulated using sim1000G package [4] giving as input the VCF from Phase III 1000 genomes sequencing data; the simulated SNPs present MAF < 0.1;
 - **phenotype**: simulated according to the procedure detailed in [1];
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _H. sapiens_.
 
 ### _A. thaliana_ natural phenotypes
-- **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center);
+- **genotype**: the full imputed version of the _A. thaliana_ genotype is available on the AraGWAS database (https://aragwas.1001genomes.org/#/download-center); genetic variants presenting MAF < 0.05 have been filtered out;
 - **phenotype**: the natural phenotypes for _A. thaliana_ have been downloaded from the AraPheno database (https://arapheno.1001genomes.org/phenotypes/);
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _A. thaliana_.
 
