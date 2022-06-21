@@ -138,3 +138,6 @@ The code only supports python3 and requires the following packages and submodule
 
 ## CONTACT
 giulia.muzio@bsse.ethz.ch
+
+## FUNDING
+This project has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No 813533. This study was supported in part by the Alfried Krupp Prize for Young University Teachers of the Alfried Krupp von Bohlen und Halbach-Stiftung (Borgwardt).
