@@ -49,7 +49,6 @@ def main(args):
 						standardize_data = True)
 
 	save_file(output, observed_statistics)
-	return 0
 
 
 def parse_arguments():

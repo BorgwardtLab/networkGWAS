@@ -49,7 +49,6 @@ def main(args):
 	# saving null distribution and p-values 
 	save_file('{}/{}'.format(args.dirnd, args.outpathnd), null_distr)
 	save_file('{}/{}'.format(args.dirpv,args.outpathpv), [np.array(list(observed_lrt.keys())), pvals])
-	return 0
 
 
 def null_distr_histogram(null_distr, args):

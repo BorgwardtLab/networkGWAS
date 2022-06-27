@@ -3,14 +3,13 @@ Compared to the original implementation at
 https://github.com/fastlmm/FaST-LMM/
 this file has been modified by Giulia Muzio
 '''
-
-from pysnptools.util.mapreduce1.runner import *
 import time
 import argparse
 import pandas as pd
-from IPython import embed
+
 from association import FastLmmSet
 from association.FastLmmSet import FastLmmSet
+from pysnptools.util.mapreduce1.runner import *
 
 
 def networkGWAS_snpSet(test_snps, set_list, phenotype, covariate = None, 

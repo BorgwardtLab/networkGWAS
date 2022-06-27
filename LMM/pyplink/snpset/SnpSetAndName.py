@@ -36,8 +36,6 @@ class SnpAndSetNamePlusBed(object): # implements ISnpSetPlusBed
             yield index
 
     def read(self): #!!why don't all the interface implementers have this method?
-        # from IPython import embed
-        # embed()
         return self.bed.read_with_specification(self)
 
     @property

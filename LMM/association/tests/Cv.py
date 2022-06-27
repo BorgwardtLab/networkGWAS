@@ -4,7 +4,6 @@ import scipy as SP
 import fastlmm.util.stats.chi2mixture as c2
 import fastlmm.association.testCV as testCV
 import logging
-from IPython import embed
 from six.moves import range
 
 class Cv(object):
@@ -147,7 +146,6 @@ class Cv(object):
             logging.info("estimating mixture parameters for non-permuted data\nusing quantile regression of log-pvalues with qmax=" + str(qmax) + "...")
             #from util.stats import chi2mixture
             mix = c2.chi2mixture( lrt = lrt, qmax = qmax, alteqnull = alteqnull,abserr=abserr,fitdof=fitdof,dof=dof)
-            #embed()
             res = mix.fit_params_Qreg() # paramter fitting
             imax=res['imax']
             logging.info("# of pvals used for nullfit=" + str(imax))

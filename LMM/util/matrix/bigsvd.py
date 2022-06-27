@@ -6,7 +6,6 @@ logging.basicConfig(level=logging.INFO)
 import numpy as np
 import datetime
 import fastlmm.util.matrix.cample as cample
-from IPython import embed
 
 
 def big_sdd(a):

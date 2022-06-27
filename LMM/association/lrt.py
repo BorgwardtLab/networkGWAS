@@ -27,7 +27,6 @@ import statsmodels.api as sm
 
 from sklearn import linear_model
 from six.moves import range
-from IPython import embed
 
 
 class lrt(association.varcomp_test):

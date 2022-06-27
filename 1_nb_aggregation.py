@@ -47,8 +47,6 @@ def main(args):
 	# 1-hop neighborhoods construction
 	neighbourhood_file(gene2snps, bim, network, args)
 
-	return 0
-
 		
 def neighbourhood_file(gene2snps, bim, A, args):
 	'''

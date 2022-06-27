@@ -171,8 +171,6 @@ class Bed(object):
         return self._original_iids
 
     def counts_and_indexes(self, snpset_withbbed):
-        # from IPython import embed
-        # embed()
         iid_count_in = len(self.original_iids)
         snp_count_in = self.snp_count
         if hasattr(self,'_ind_used'):

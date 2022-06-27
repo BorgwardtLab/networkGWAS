@@ -16,7 +16,7 @@ from fastlmm.util.util import *
 import time
 import warnings
 import logging
-from IPython import embed
+
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.metrics import pairwise_distances
 from sklearn.metrics.pairwise import polynomial_kernel
@@ -157,7 +157,6 @@ class LMM(object):
             
             elif(kernel['type'] == "linear"):
                 if((not self.forcefullrank) and (k < N)):
-                    from IPython import embed
                     # this is the original implementation, i.e. the kernel on the neighborhoods is the linear kernel
                     print('linear kernel calculation...')
                     M = np.linalg.norm(self.G, axis = 1) 

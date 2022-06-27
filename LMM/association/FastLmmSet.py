@@ -10,6 +10,7 @@ import time
 import logging
 import warnings
 import scipy as sp
+import numpy as np
 import util.preprocess as util
 
 from .Result import *
@@ -18,8 +19,8 @@ from pyplink.altset_list.SnpAndSetNameCollection import SnpAndSetNameCollection
 from pysnptools.util.pheno import *
 from association.tests import *
 from pyplink.snpreader.Bed import *
-import numpy as np
-from IPython import embed
+
+
 
 
 class FastLmmSet:

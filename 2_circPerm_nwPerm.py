@@ -48,9 +48,6 @@ def main(args):
 	# circular permutation & degree-preserving network permutation
 	circular_permutations(SNPs, gene2snps, network, genes, args)
 
-	return 0
-
-
 
 def neighbourhood_file(A, gene_name,  shifted_SNPs, gene_snps, j, args):
 	'''
