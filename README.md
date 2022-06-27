@@ -81,9 +81,9 @@ python3 4_obtain_pvals.py \
 --nperm 100 \
 --dirnd results/null_distr/ \
 --dirpv results/pvals/ \
---fignd null_distr.png \ 
+--fignd null_distr.png \
 --figpv qqplot.png \
---outpathnd null_distr.pkl\
+--outpathnd null_distr.pkl \
 --outpathpv pvals.pkl
 ```
 #### 5) identifying the statistically associated neighborhoods in case of one phenotype:
