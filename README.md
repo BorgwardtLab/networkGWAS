@@ -60,7 +60,7 @@ python3 3_LMM.py \
 --odir results/llr/ \
 --ofile llr.pkl
 ```
-#### 3.2) running the lrt calculation on the permuted settings:
+#### 3.2) running the lrt calculation on _one_ of the permuted settings, i.e., the permuted setting with index (or permutation id) j = 0:
 ```
 python3 3_LMM.py \
 --genotype data/genotype \
@@ -71,7 +71,7 @@ python3 3_LMM.py \
 --odir results/llr/permuted \
 --ofile llr_
 ```
-Note that since the permutation id is a command line argument, ([**3_LMM.py**](3_LMM.py)) for the different permutations can be run in parallel. 
+This command has to be run for enough permutations, e.g., a minimum of 100 permutations. This can be done by changing the value of the input parameter ```j```. Note that since the permutation id ```--j```) is a command line argument, ([**3_LMM.py**](3_LMM.py)) for the different permutations can be run in parallel. 
 
 #### 4) obtaining the _p_-values:
 ```
