@@ -22,7 +22,7 @@ For more details on the Plink formats, please refer to https://www.cog-genomics.
 The code only supports python3 and requires the following packages and submodules:
 + numpy (tested on 1.18.1)
 + pandas (tested on 1.0.1)
-+ fastlmm (https://github.com/fastlmm/FaST-LMM)
++ fastlmm (https://github.com/fastlmm/FaST-LMM) (tested on 0.4.8)
 
 ## EXAMPLES
 #### 1) running the neighborhood aggregation operation:
