@@ -50,6 +50,7 @@ python3 2_circPerm_nwPerm.py \
 --onw nw_ \
 --onb nbs_
 ```
+Since this command runs the generation of 100 permuted settings, it might take a few minutes, depending on the resources available.
 #### 3.1) running the lrt calculation on the non-permuted setting:
 ```
 python3 3_LMM.py \
