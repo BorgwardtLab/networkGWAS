@@ -18,6 +18,12 @@ The toy dataset is comprised of:
 
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
+## DEPENDENCIES
+The code only supports python3 and requires the following packages and submodules:
++ numpy (tested on 1.18.1)
++ pandas (tested on 1.0.1)
++ fastlmm (https://github.com/fastlmm/FaST-LMM)
+
 ## EXAMPLES
 #### 1) running the neighborhood aggregation operation:
 ```
@@ -118,13 +124,6 @@ In order to reproduce the results presented in the manuscript, here a list of th
 ### _S. cerevisiae_ natural phenotypes
 - **genotype & phenotype**: genotype and phenotype for the model organism _S. cerevisiae_ are available at http://1002genomes.u-strasbg.fr/files/, which is the repository of the publication [3]; 
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _S. cerevisiae_.
-
-## DEPENDENCIES
-The code only supports python3 and requires the following packages and submodules:
-+ numpy (tested on 1.18.1)
-+ pandas (tested on 1.0.1)
-+ fastlmm (https://github.com/fastlmm/FaST-LMM)
-
 
 ## REFERENCES
 
