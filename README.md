@@ -72,7 +72,7 @@ python3 3_LMM.py \
 --odir results/llr/permuted \
 --ofile llr_
 ```
-**IMPORTANT:** This command has to be run for enough permutations, e.g., a minimum of 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
+**IMPORTANT:** This command has to be run for enough permutations, e.g., in this example we use 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
 
 #### 4) obtaining the _p_-values:
 ```
