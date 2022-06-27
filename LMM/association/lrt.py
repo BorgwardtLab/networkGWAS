@@ -22,7 +22,6 @@ from fastlmm.util.mingrid import *
 from fastlmm.util.util import *
 import fastlmm.util.stats as ss
 import inference 
-import fastlmm.association.score as score
 import fastlmm.association as association
 import statsmodels.api as sm
 

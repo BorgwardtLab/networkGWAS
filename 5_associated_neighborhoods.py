@@ -15,7 +15,7 @@ import argparse
 import numpy as np
 
 from utils import *
-from IPython import embed
+
 
 def main(args):
 	# Loading the causal genes
