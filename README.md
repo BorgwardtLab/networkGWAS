@@ -71,7 +71,7 @@ python3 3_LMM.py \
 --odir results/llr/permuted \
 --ofile llr_
 ```
-IMPORTANT: This command has to be run for enough permutations, e.g., a minimum of 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
+**IMPORTANT:** This command has to be run for enough permutations, e.g., a minimum of 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
 
 #### 4) obtaining the _p_-values:
 ```
@@ -93,7 +93,7 @@ python3 5_associated_neighborhoods.py \
 --pv 'results/pvals/pvals.pkl' \
 --q1 0.05 
 ```
-or  identifying the statistically associated neighborhoods in case of multiple phenotypes:
+or  identifying the statistically associated neighborhoods in case of multiple phenotypes that are from the same study:
 ```
 python3 5_associated_neighborhoods.py \
 --nw 'data/PPI_adj.pkl' \
@@ -101,7 +101,6 @@ python3 5_associated_neighborhoods.py \
 --q1 0.05 \
 --q2 0.05
 ```
-
 
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
