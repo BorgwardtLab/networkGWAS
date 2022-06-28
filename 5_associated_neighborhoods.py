@@ -25,19 +25,23 @@ def main(args):
 		# Benjamini-hochberg procedure
 		pv = load_file(args.pv[0])
 		pos = benjamini_hochberg(pv[1], pv[0], args.q1)
+
+		# Printing out the results
+		genes = analysis(pos, nw)
+		save_file(args.o, genes)
 		
 	else:
 		# Hierarchical benjamini-hochberg-based procedure
-		pv, cg = read_pv(args.pv, args.cg)
+		pv = read_pv(args.pv)
 		pos_pheno = step1(pv, args)
 		for pheno in pos_pheno: # step 2
 			print('Phenotype {}:'.format(pheno))
 			pos = benjamini_hochberg(pv[pheno][1], pv[pheno][0], args.q2*len(pos_pheno)/len(pv))
+			# Printing out the results
+			genes = analysis(pos, nw)
+			save_file(args.o, genes)
 			
-	# Printing out the results
-	genes = analysis(pos, nw)
-	save_file(args.o, genes)
-
+	
 
 def analysis(pos, nw):
 	'''
@@ -154,6 +158,30 @@ def benjamini_hochberg(pval_not_sorted, test_not_sorted, q):
 	return pos
 
 
+def read_pv(filenames):
+	'''
+	Function for reading pvals when studying multiple 
+	related phenotypes, hence when having more then one 
+	phenotype. 
+
+	Input
+	--------------
+	filenames:  list of filenames of the pvalues to analyze
+
+	Output
+	--------------
+	pv:         dictionary with phenotype-index as key and
+				genes and their respective p-values as values
+				(saved in two different arrays)
+	'''
+	pv = {}
+	for index, fname in enumerate(filenames):
+		pvalues = load_file(fname)
+		pv[index] = pvalues
+
+
+	return pv
+
 
 def parse_arguments():
 	'''
@@ -164,7 +192,6 @@ def parse_arguments():
 
 	Output
 	----------
-	args.cg:   path to the array of causal genes
 	args.nw:   path to the network
 	args.pv:   path to the pvalue. Note that this command-line argument
 			   can accept multiple p-values' paths
@@ -176,7 +203,7 @@ def parse_arguments():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--nw', required = False, default = 'data/PPI_adj.pkl')
 	parser.add_argument('--pv', required = False, nargs = '+',
-						default = ['results/pvals/pvals.pkl'])
+						default = ['results/pvals/pvals.pkl', 'results/pvals/pvals.pkl'])
 	parser.add_argument('--q1', required = False, type = float, default = 0.1)
 	parser.add_argument('--q2', required = False, type = float, default = 0.1)
 	parser.add_argument('--o',  required = False, default = 'results/associated.pkl')
