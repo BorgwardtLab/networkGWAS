@@ -50,6 +50,7 @@ python3 2_circPerm_nwPerm.py \
 --onw nw_ \
 --onb nbs_
 ```
+Since this command runs the generation of 100 permuted settings, it might take a few minutes, depending on the resources available.
 #### 3.1) running the lrt calculation on the non-permuted setting:
 ```
 python3 3_LMM.py \
@@ -71,7 +72,7 @@ python3 3_LMM.py \
 --odir results/llr/permuted \
 --ofile llr_
 ```
-**IMPORTANT:** This command has to be run for enough permutations, e.g., a minimum of 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
+**IMPORTANT:** This command has to be run for enough permutations, e.g., in this example we use 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
 
 #### 4) obtaining the _p_-values:
 ```
@@ -81,9 +82,9 @@ python3 4_obtain_pvals.py \
 --nperm 100 \
 --dirnd results/null_distr/ \
 --dirpv results/pvals/ \
---fignd null_distr.png \ 
+--fignd null_distr.png \
 --figpv qqplot.png \
---outpathnd null_distr.pkl\
+--outpathnd null_distr.pkl \
 --outpathpv pvals.pkl
 ```
 #### 5) identifying the statistically associated neighborhoods in case of one phenotype:
