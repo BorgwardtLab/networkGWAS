@@ -102,6 +102,7 @@ python3 5_associated_neighborhoods.py \
 --q1 0.05 \
 --q2 0.05
 ```
+Note that this last command would work only after having obtained the _p_-values for ``pheno1'', ``pheno2'', and ``pheno3''. 
 
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
