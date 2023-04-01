@@ -160,6 +160,10 @@ In order to reproduce the results presented in the manuscript, here a list of th
 - **genotype & phenotype**: genotype and phenotype for the model organism _S. cerevisiae_ are available at http://1002genomes.u-strasbg.fr/files/, which is the repository of the publication [3]; 
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _S. cerevisiae_.
 
+### _S. cerevisiae_ natural phenotypes
+- **genotype & phenotype**: genotype and phenotype are obtained from the Estonian BioBank dataset (https://genomics.ut.ee/en/content/estonian-biobank); 
+- **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for _H. sapiens_.
+
 ## REFERENCES
 
 [1] G. Muzio, L. O’Bray, L. Meng-Papaxanthos, J. Klatt, K. Borgwardt, networkGWAS: A network-based approach for genome-wide association studies in structured populations, bioRxiv, https://doi.org/10.1101/2021.11.11.468206.
