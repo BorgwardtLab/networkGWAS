@@ -33,22 +33,35 @@ def main(args):
 	
 	if(not os.path.exists(args.odir)):
 		os.makedirs(args.odir)
-
+	
 	if(not args.j):
 		snp_set_list = args.nbs
 		output       = '{}/{}'.format(args.odir, args.ofile)
+
+		# running fastlmm snp-set
+		observed_statistics, null_distribution = \
+		networkGWAS_snpSet(test_snps = genotype, set_list = snp_set_list, 
+							phenotype = phenotype, test_type = "lrt",
+							covariate = args.covariate, kernel = args.kernel,
+							standardize_data = True)
+
+		save_file(output, observed_statistics)
 	else:
-		snp_set_list = args.nbs + args.j + '.txt'
-		output       = '{}/{}{}.pkl'.format(args.odir, args.ofile, args.j)
+		if(len(args.j) > 2): raise NameError('Wrong permutation indexes!')
+		
+		for j in range(args.j[0], args.j[-1] + 1):
+			snp_set_list = args.nbs + str(j) + '.txt'
+			output       = '{}/{}{}.pkl'.format(args.odir, args.ofile, j)
 
-	# running fastlmm snp-set
-	observed_statistics, null_distribution = \
-	networkGWAS_snpSet(test_snps = genotype, set_list = snp_set_list, 
-						phenotype = phenotype, test_type = "lrt",
-						covariate = args.covariate, kernel = args.kernel,
-						standardize_data = True)
+			# running fastlmm snp-set
+			observed_statistics, null_distribution = \
+			networkGWAS_snpSet(test_snps = genotype, set_list = snp_set_list, 
+								phenotype = phenotype, test_type = "lrt",
+								covariate = args.covariate, kernel = args.kernel,
+								standardize_data = True)
 
-	save_file(output, observed_statistics)
+			save_file(output, observed_statistics)
+		 
 
 
 def parse_arguments():
@@ -96,7 +109,7 @@ def parse_arguments():
 								help = 'type of the kernel for modeling \
 								the similarities between the SNPs in the\
 								neighborhoods.')
-	parser.add_argument('--j',          required = False, 
+	parser.add_argument('--j',  nargs='+',   type=int,     required = False, 
 								help = 'permutation index. If not given,\
 							   the analysis is performed on the non-permuted setting.')
 	parser.add_argument('--odir',       required = True, 

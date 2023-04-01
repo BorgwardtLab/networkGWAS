@@ -18,13 +18,27 @@ The toy dataset is comprised of:
 
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
+If the user has a PPI network in two columns format, that is:
+
+```
+gene1	gene4
+gene1	gene2
+...	...
+```
+It is possible to convert it to the required datafram format using the command:
+```
+python3 convert_ppi.py --input data/ppi_2columns.txt
+```
+
+
 ## DEPENDENCIES
 The code only supports python3 and requires the following packages and submodules:
 + numpy (tested on 1.18.1)
 + pandas (tested on 1.0.1)
 + fastlmm (https://github.com/fastlmm/FaST-LMM) (tested on 0.4.8)
++ pysnotools (tested on 0.4.19)
 
-## EXAMPLES
+## EXAMPLE 1
 #### 1) running the neighborhood aggregation operation:
 ```
 python3 1_nb_aggregation.py \
@@ -72,7 +86,19 @@ python3 3_LMM.py \
 --odir results/llr/permuted \
 --ofile llr_
 ```
-**IMPORTANT:** This command has to be run for enough permutations, e.g., in this example we use 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permutated settings can be run in parallel. 
+
+**IMPORTANT:** This command has to be run for enough permutations, e.g., in this example we use 100 permutations. This can be done by changing the value of the input parameter ```--j``` with a value from 0 to the maximum permutation id available, which in this example would be 99. Note that since the permutation id (```--j```) is a command line argument, [**3_LMM.py**](3_LMM.py) for the different permuted settings can be run in parallel. When enough resources should not be available to run multiple permutations in parallel, it is possible to run the lrt calculation sequentially by specifying a range of permutations. The following command calculates the lrt values on the permuted settings from 0 to 99:
+
+```
+python3 3_LMM.py \
+--genotype data/genotype \
+--phenotype data/y_50.pheno \
+--nbs results/settings/permutations/neighborhoods/nbs_ \
+--kernel lin \
+--j 0 99 \
+--odir results/llr/permuted \
+--ofile llr_
+```
 
 #### 4) obtaining the _p_-values:
 ```
@@ -102,7 +128,15 @@ python3 5_associated_neighborhoods.py \
 --q1 0.05 \
 --q2 0.05
 ```
-Note that this last command would work only after having obtained the _p_-values for ``pheno1'', ``pheno2'', and ``pheno3''. 
+Note that this last command would work only after having obtained the _p_-values for "pheno1'', "pheno2'', and "pheno3''. 
+
+## EXAMPLE 2
+It is also possible to run the entire analysis using one script, namely:
+
+```
+bash run_analysis.sh
+```
+The user would need to change the input files and parameters in the file according to their data. 
 
 ## DATA AVAILABILITY
 In order to reproduce the results presented in the manuscript, here a list of the data availabilities:
