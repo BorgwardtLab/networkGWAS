@@ -18,16 +18,16 @@ The toy dataset is comprised of:
 
 For more details on the Plink formats, please refer to https://www.cog-genomics.org/plink/2.0/formats.
 
-If the user has a PPI network in two columns format, that is:
+In case the user has a PPI network in two columns format (without header), that is:
 
 ```
 gene1	gene4
 gene1	gene2
 ...	...
 ```
-It is possible to convert it to the required datafram format using the command:
+it is possible to convert it to the required dataframe (i.e., adjacency matrix) format using the command:
 ```
-python3 convert_ppi.py --input data/ppi_2columns.txt
+python3 convert_ppi.py --i data/ppi_edges.txt --o data/PPI_adj.pkl
 ```
 
 
