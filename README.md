@@ -160,7 +160,7 @@ In order to reproduce the results presented in the manuscript, here a list of th
 - **genotype & phenotype**: genotype and phenotype for the model organism _S. cerevisiae_ are available at http://1002genomes.u-strasbg.fr/files/, which is the repository of the publication [3]; 
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for the model organism _S. cerevisiae_.
 
-### _S. cerevisiae_ natural phenotypes
+### Estonian BioBank phenotypes
 - **genotype & phenotype**: genotype and phenotype are obtained from the Estonian BioBank dataset (https://genomics.ut.ee/en/content/estonian-biobank); 
 - **PPI network**: the PPI network is downloaded from the STRING database (https://string-db.org/) by selecting the high confidence PPIs (score >= 700) for _H. sapiens_.
 
