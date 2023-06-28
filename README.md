@@ -1,6 +1,11 @@
 # networkGWAS
 
-This repository contains the python implementation of networkGWAS method, which foresees the following steps:
+This repository contains the python implementation of networkGWAS method. The paper underlying this method is available at https://doi.org/10.1093/bioinformatics/btad370. networkGWAS main steps are showed in the following figure: 
+
+![image](https://github.com/BorgwardtLab/networkGWAS/assets/56036317/a2c7f00a-17ac-47be-a632-63f6386f9b9c)
+
+
+Each of the different steps of networkGWAS can be computed by the following scripts:
 1) neighborhood aggregation of the SNPs according to the biological network ([**1_nb_aggregation.py**](1_nb_aggregation.py));
 2) 2-level permutation procedure, which combines a circular permutation of the SNPs and degree-preserving permutation of the network ([**2_circPerm_nwPerm.py**](2_circPerm_nwPerm.py));
 3) calculation of the log-likelihood ratio (lrt) test statistics on both the non-permuted setting and the permuted settings by employing the modified FaST-LMM snp-set function, which is available in the folder "LMM" ([**3_LMM.py**](3_LMM.py));
@@ -166,7 +171,7 @@ In order to reproduce the results presented in the manuscript, here a list of th
 
 ## REFERENCES
 
-[1] G. Muzio, L. O’Bray, L. Meng-Papaxanthos, J. Klatt, K. Borgwardt, networkGWAS: A network-based approach for genome-wide association studies in structured populations, bioRxiv, https://doi.org/10.1101/2021.11.11.468206.
+[1] G. Muzio, L. O’Bray, L. Meng-Papaxanthos, J. Klatt, K. Fischer, K. Borgwardt, networkGWAS: a network-based approach to discover genetic associations, Bioinformatics 9(6), 2023.
 
 [2] C. Lippert, J. Xiang, D. Horta, C. Widmer, C. Kadie, D. Heckerman, J. Listgarten, Greater power and computational efficiency for kernel-based association testing of sets of genetic variants, Bioinformatics 30(22):3206–3214, 2014.
 
